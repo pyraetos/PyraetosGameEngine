@@ -3,6 +3,8 @@ package net.pyraetos;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.pyraetos.util.Sys;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -20,6 +22,8 @@ public class Game{
 	public static final float FIELD_OF_VIEW = 70f * ((float)Math.PI / 180f);
 	public static final float NEAR_CLIP = 0f;
 	public static final float FAR_CLIP = 1000f;
+	public static final int MAX_FPS = 1000;
+	public static final long FRAME_TIME = (long)(1d / (double)MAX_FPS * 1000000000d);
 	
 	private Set<Object3D> objects;
 	
@@ -61,9 +65,24 @@ public class Game{
 	}
 	
 	private void loop(){
-		while(!Display.isCloseRequested()){
-			update();
-			render();
+		long lastFrame = 0;
+		long lag = 0;
+		while(true){
+			long startTime = Sys.time();
+			lag += lastFrame;
+			boolean render = false;
+			while(lag > FRAME_TIME){
+				render = true;
+				lag -= FRAME_TIME;
+				if(Display.isCloseRequested())
+					return;
+				update();
+			}
+			if(render)
+				render();
+			else
+				Sys.sleep(1);
+			lastFrame = Sys.time() - startTime;
 		}
 	}
 	
@@ -72,17 +91,18 @@ public class Game{
 	
 	private void update(){
 		Input.update();
-		x = x > 9.7f ? -10f : x + .001f;
+		x = x > 9.7f ? -10f : x + .01f;
 		fx = 2f * (float)Math.sin(x);
+		for(Object3D object : objects){
+			object.rotate(.001f, 0.001f, .001f);
+			object.setTranslation(x, fx, 10f);
+		}
 	}
 	
 	private void render(){
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		for(Object3D object : objects){
-			object.rotate(.0001f, 0.0001f, .0001f);
-			object.setTranslation(x, fx, 10f);
+		for(Object3D object : objects)
 			object.render();
-		}
 		Display.update();
 	}
 	
