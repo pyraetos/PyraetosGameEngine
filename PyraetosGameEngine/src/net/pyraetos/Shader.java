@@ -38,19 +38,15 @@ public class Shader{
 		int shader = glCreateShader(type);
 		glShaderSource(shader, code);
 		glCompileShader(shader);
-		if(glGetShaderi(shader, GL_COMPILE_STATUS) == 0){
+		if(glGetShaderi(shader, GL_COMPILE_STATUS) == 0)
 			Sys.error("Syntax error in shader!");
-			System.exit(1);
-		}
 		glAttachShader(pointer, shader);
 	}
 	
 	public void linkShaders(){
 		glLinkProgram(pointer);
-		if(glGetProgrami(pointer, GL_LINK_STATUS) == 0){
+		if(glGetProgrami(pointer, GL_LINK_STATUS) == 0)
 			Sys.error("Linking error in shader!");
-			System.exit(1);
-		}
 	}
 	
 	public void bind(){
@@ -59,10 +55,8 @@ public class Shader{
 
 	public void addUniform(String uniform){
 		int ptr = glGetUniformLocation(pointer, uniform);
-		if(ptr == -1){
+		if(ptr == -1)
 			Sys.error("Uniform \"" + uniform + "\" does not exist!");
-			System.exit(1);
-		}
 		uniforms.put(uniform, ptr);
 	}
 	

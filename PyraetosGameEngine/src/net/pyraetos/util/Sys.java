@@ -157,14 +157,17 @@ public abstract class Sys{
 
 	public static void error(String s){
 		System.err.println(s);
+		System.exit(1);
 	}
 	
 	public static void error(Object o){
 		System.err.println(o);
+		System.exit(1);
 	}
 	
 	public static void error(){
 		System.err.println("Error!");
+		System.exit(1);
 	}
 	
 	public static boolean chance(double chance){

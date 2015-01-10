@@ -1,5 +1,6 @@
 package net.pyraetos.util.graphics;
 
+import net.pyraetos.util.Sys;
 import net.pyraetos.util.Vector;
 
 public class FloatVector extends Vector<Float>{
@@ -40,9 +41,15 @@ public class FloatVector extends Vector<Float>{
 		return c;
 	}
 	
-	//public FloatVector cross(FloatVector b){
-		
-	//}
+	public FloatVector cross(FloatVector b){
+		if(size != 3 || b.size != 3)
+			Sys.error("Both vectors in a cross product must be 3 dimensional!");
+		FloatVector result = new FloatVector();
+		result.pushBack(getY() * b.getZ() - getZ() * b.getY());
+		result.pushBack(getZ() * b.getX() - getX() * b.getZ());
+		result.pushBack(getX() * b.getY() - getY() * b.getX());
+		return result;
+	}
 	
 	public FloatVector toUnitVector(){
 		FloatVector result = new FloatVector();
