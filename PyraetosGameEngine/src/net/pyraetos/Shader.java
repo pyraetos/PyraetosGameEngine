@@ -7,9 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.pyraetos.util.Data;
-import net.pyraetos.util.Matrix;
-import net.pyraetos.util.Vector;
 import net.pyraetos.util.Sys;
+import net.pyraetos.util.graphics.FloatMatrix;
+import net.pyraetos.util.graphics.FloatVector;
 import net.pyraetos.util.graphics.GraphicsUtil;
 
 public class Shader{
@@ -78,15 +78,15 @@ public class Shader{
 		setUniform(name, (float)value);
 	}
 	
-	public void setUniform(String name, Vector<Float> value){
+	public void setUniform(String name, FloatVector value){
 		glUniform3f(uniforms.get(name), value.getX(), value.getY(), value.getZ());
 	}
 	
-	public void setUniform4(String name, Vector<Float> value){
+	public void setUniform4(String name, FloatVector value){
 		glUniform4f(uniforms.get(name), value.getX(), value.getY(), value.getZ(), value.get(3));
 	}
 	
-	public void setUniform(String name, Matrix<Float> matrix){
+	public void setUniform(String name, FloatMatrix matrix){
 		glUniformMatrix3(uniforms.get(name), false, GraphicsUtil.toBuffer(matrix));
 	}
 }

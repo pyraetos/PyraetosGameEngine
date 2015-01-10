@@ -1,16 +1,15 @@
 package net.pyraetos;
 
-import net.pyraetos.util.Vector;
 import net.pyraetos.util.graphics.FloatMatrix;
-import net.pyraetos.util.graphics.GraphicsUtil;
+import net.pyraetos.util.graphics.FloatVector;
 
 public class Object3D{
 
 	private Mesh mesh;
 	private Shader shader;
-	private Vector<Float> translation;
-	private Vector<Float> rotation;
-	private Vector<Float> scale;
+	private FloatVector translation;
+	private FloatVector rotation;
+	private FloatVector scale;
 	
 	public Object3D(){
 		mesh = new Mesh();
@@ -24,9 +23,9 @@ public class Object3D{
 	
 	private void init(){
 		shader = new Shader();
-		this.translation = new Vector<Float>(0f, 0f, 0f);
-		this.rotation = new Vector<Float>(0f, 0f, 0f);
-		this.scale = new Vector<Float>(1f, 1f, 1f);
+		this.translation = new FloatVector(0f, 0f, 0f);
+		this.rotation = new FloatVector(0f, 0f, 0f);
+		this.scale = new FloatVector(1f, 1f, 1f);
 		shader.addVertexShader("shaders/vshader");
 		shader.addFragmentShader("shaders/fshader");
 		shader.linkShaders();
@@ -44,12 +43,12 @@ public class Object3D{
 		return shader;
 	}
 	
-	private Vector<Float> getProjection(){
+	private FloatVector getProjection(){
 		float x = ((float)Math.tan(Game.FIELD_OF_VIEW / 2f) * Game.ASPECT);
 		float y = ((float)Math.tan(Game.FIELD_OF_VIEW / 2f));
 		float z = -Game.NEAR_CLIP;
 		float depth = Game.FAR_CLIP - Game.NEAR_CLIP;
-		return new Vector<Float>(x, y, z, depth);
+		return new FloatVector(x, y, z, depth);
 	}
 	
 	public void render(){
@@ -73,44 +72,44 @@ public class Object3D{
 		return translation.getZ();
 	}
 	
-	public void setTranslation(Vector<Float> v){
+	public void setTranslation(FloatVector v){
 		translation = v;
 	}
 	
 	public void setTranslation(float x, float y, float z){
-		setTranslation(new Vector<Float>(x, y, z));
+		setTranslation(new FloatVector(x, y, z));
 	}
 	
-	public void translate(Vector<Float> v){
-		setTranslation(GraphicsUtil.add(translation, v));
+	public void translate(FloatVector v){
+		setTranslation(translation.add(v));
 	}
 	
 	public void translate(float dx, float dy, float dz){
-		translate(new Vector<Float>(dx, dy, dz));
+		translate(new FloatVector(dx, dy, dz));
 	}
 	
-	public void setRotation(Vector<Float> v){
+	public void setRotation(FloatVector v){
 		rotation = v;
 	}
 	
 	public void setRotation(float pitch, float yaw, float roll){
-		setRotation(new Vector<Float>(pitch, yaw, roll));
+		setRotation(new FloatVector(pitch, yaw, roll));
 	}
 	
-	public void rotate(Vector<Float> v){
-		setRotation(GraphicsUtil.add(rotation, v));
+	public void rotate(FloatVector v){
+		setRotation(rotation.add(v));
 	}
 	
 	public void rotate(float pitch, float yaw, float roll){
-		rotate(new Vector<Float>(pitch, yaw, roll));
+		rotate(new FloatVector(pitch, yaw, roll));
 	}
 	
-	public void setScale(Vector<Float> v){
+	public void setScale(FloatVector v){
 		scale = v;
 	}
 	
 	public void setScale(float x, float y, float z){
-		setScale(new Vector<Float>(x, y, z));
+		setScale(new FloatVector(x, y, z));
 	}
 	
 }

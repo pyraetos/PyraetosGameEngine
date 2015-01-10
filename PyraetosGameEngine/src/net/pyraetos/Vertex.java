@@ -1,21 +1,21 @@
 package net.pyraetos;
 
-import net.pyraetos.util.Vector;
+import net.pyraetos.util.graphics.FloatVector;
 
 public class Vertex{
 
 	public static final int SIZE = 3;
-	private Vector<Float> point;
+	private FloatVector point;
 	
-	public Vertex(Vector<Float> point){
+	public Vertex(FloatVector point){
 		this.point = point;
 	}
 	
 	public Vertex(float x, float y, float z){
-		this(new Vector<Float>(x, y, z));
+		this(new FloatVector(x, y, z));
 	}
 	
-	public Vector<Float> getVector(){
+	public FloatVector getVector(){
 		return point;
 	}
 	

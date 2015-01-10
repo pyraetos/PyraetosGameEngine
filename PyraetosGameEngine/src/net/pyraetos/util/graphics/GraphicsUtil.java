@@ -6,8 +6,6 @@ import java.util.List;
 
 import net.pyraetos.Vertex;
 import net.pyraetos.util.Matrix;
-import net.pyraetos.util.Vector;
-
 import org.lwjgl.BufferUtils;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -16,13 +14,6 @@ public abstract class GraphicsUtil{
 	
 	public static String getOpenGLVersion(){
 		return glGetString(GL_VERSION);
-	}
-	
-	public static Vector<Float> add(Vector<Float> a, Vector<Float> b){
-		Float[] result = new Float[a.size()];
-		for(int i = 0; i < a.size(); i++)
-			result[i] = a.get(i) + b.get(i);
-		return new Vector<Float>(result);
 	}
 	
 	public static FloatBuffer toBuffer(Vertex[] vertices){
