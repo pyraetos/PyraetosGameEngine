@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.pyraetos.util.Sys;
+import net.pyraetos.util.graphics.FloatVector;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
@@ -20,6 +21,9 @@ public class Game{
 	public static final String TITLE = "Game";
 	public static final float ASPECT = (float)WIDTH / (float)HEIGHT;
 	public static final float FIELD_OF_VIEW = 70f * ((float)Math.PI / 180f);
+	public static final FloatVector X_AXIS = new FloatVector(1f, 0f, 0f);
+	public static final FloatVector Y_AXIS = new FloatVector(0f, 1f, 0f);
+	public static final FloatVector Z_AXIS = new FloatVector(0f, 0f, 1f);
 	public static final float NEAR_CLIP = 0f;
 	public static final float FAR_CLIP = 1000f;
 	public static final int MAX_FPS = 1000;
@@ -61,6 +65,7 @@ public class Game{
 		Object3D object = new Object3D("models/cube.obj");
 		object.setScale(.25f, .25f, .25f);
 		object.getMesh().setWireframe(true);
+		object.setTranslation(0, 0, 10f);
 		objects.add(object);
 	}
 	
@@ -95,7 +100,7 @@ public class Game{
 		fx = 2f * (float)Math.sin(x);
 		for(Object3D object : objects){
 			object.rotate(.001f, 0.001f, .001f);
-			object.setTranslation(x, fx, 10f);
+			object.setTranslation(x, fx, object.getZ());
 		}
 	}
 	
