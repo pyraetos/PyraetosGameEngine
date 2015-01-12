@@ -15,6 +15,10 @@ public class Vector<T>{
 			this.elements = elements;
 	}
 	
+	public Vector<T> copy(){
+		return new Vector<T>(elements);
+	}
+	
 	public T getX(){
 		return elements[0];
 	}
@@ -25,6 +29,18 @@ public class Vector<T>{
 
 	public T getZ(){
 		return elements[2];
+	}
+	
+	public void setX(T t){
+		set(0, t);
+	}
+	
+	public void setY(T t){
+		set(1, t);
+	}
+
+	public void setZ(T t){
+		set(2, t);
 	}
 	
 	public T get(int index){
@@ -54,6 +70,24 @@ public class Vector<T>{
 			elements = (T[])temp;
 		}else{
 			elements[size] = value;
+		}
+		size++;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void pushFront(T value){
+		if(elements[space() - 1] != null){
+			Object[] temp = new Object[space() * 2];
+			for(int i = 1; i <= size; i++){
+				temp[i] = elements[i - 1];
+			}
+			temp[0] = value;
+			elements = (T[])temp;
+		}else{
+			for(int i = size; i > 0; i--){
+				elements[i] = elements[i - 1];
+			}
+			elements[0] = value;
 		}
 		size++;
 	}

@@ -8,6 +8,13 @@ public class FloatVector extends Vector<Float>{
 	public FloatVector(Float... elements){
 		super(elements);
 	}
+	
+	public FloatVector copy(){
+		FloatVector v = new FloatVector();
+		for(Object f : elements)
+			v.pushBack((float)f);
+		return v;
+	}
 
 	public FloatVector multiply(float scalar){
 		FloatVector result = new FloatVector();
@@ -66,5 +73,4 @@ public class FloatVector extends Vector<Float>{
 		}
 		return (float)Math.sqrt(inner);
 	}
-	
 }

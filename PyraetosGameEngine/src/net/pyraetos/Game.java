@@ -63,9 +63,8 @@ public class Game{
 	private void initGame(){
 		objects = new HashSet<Object3D>();
 		Object3D object = new Object3D("models/cube.obj");
-		object.setScale(.25f, .25f, .25f);
 		object.getMesh().setWireframe(true);
-		object.setTranslation(0, 0, 10f);
+		object.setTranslation(0, 0, 15f);
 		objects.add(object);
 	}
 	
@@ -99,7 +98,7 @@ public class Game{
 		x = x > 9.7f ? -10f : x + .01f;
 		fx = 2f * (float)Math.sin(x);
 		for(Object3D object : objects){
-			object.rotate(.001f, 0.001f, .001f);
+			object.rotate(0.001f, 0.001f, 0.001f);
 			object.setTranslation(x, fx, object.getZ());
 		}
 	}
