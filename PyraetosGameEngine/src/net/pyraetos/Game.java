@@ -31,6 +31,8 @@ public class Game{
 	
 	private Set<Object3D> objects;
 	
+	private static Camera camera;
+	
 	public static void main(String[] args){
 		new Game();
 	}
@@ -58,12 +60,13 @@ public class Game{
 		//glEnable(GL_CULL_FACE);
 		glEnable(GL_DEPTH_TEST);
 		//glEnable(GL_FRAMEBUFFER_SRGB);
+		camera = new Camera();
 	}
 	
 	private void initGame(){
 		objects = new HashSet<Object3D>();
 		Object3D object = new Object3D("models/cube.obj");
-		object.getMesh().setWireframe(true);
+		//object.getMesh().setWireframe(true);
 		object.setTranslation(0, 0, 15f);
 		objects.add(object);
 	}
@@ -90,16 +93,22 @@ public class Game{
 		}
 	}
 	
-	private float x = -10f;
-	private float fx;
-	
 	private void update(){
 		Input.update();
-		x = x > 9.7f ? -10f : x + .01f;
-		fx = 2f * (float)Math.sin(x);
+		if(Input.isKeyDown(Keyboard.KEY_W))
+			camera.move(0f, 0f, .01f);
+		if(Input.isKeyDown(Keyboard.KEY_S))
+			camera.move(0f, 0f, -.01f);
+		if(Input.isKeyDown(Keyboard.KEY_A))
+			camera.move(-.01f, 0f, 0f);
+		if(Input.isKeyDown(Keyboard.KEY_D))
+			camera.move(.01f, 0f, 0f);
+		if(Input.isKeyDown(Keyboard.KEY_SPACE))
+			camera.move(0f, .01f, 0f);
+		if(Input.isKeyDown(Keyboard.KEY_LSHIFT))
+			camera.move(0f, -.01f, 0f);
 		for(Object3D object : objects){
 			object.rotate(0.001f, 0.001f, 0.001f);
-			object.setTranslation(x, fx, object.getZ());
 		}
 	}
 	
@@ -108,6 +117,10 @@ public class Game{
 		for(Object3D object : objects)
 			object.render();
 		Display.update();
+	}
+	
+	public static Camera getCamera(){
+		return camera;
 	}
 	
 	private void close(){

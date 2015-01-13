@@ -16,6 +16,10 @@ public class Quaternion{
 		this.q = q;
 	}
 	
+	protected Quaternion(Float... elements){
+		this(new FloatVector(elements));
+	}
+	
 	public Quaternion multiply(Quaternion v){
 		float w = q.get(0);
 		float x = q.get(1);
@@ -32,20 +36,14 @@ public class Quaternion{
 				c*w + b*x - a*y + u*z);
 		return new Quaternion(r);
 	}
-	
-	public FloatVector rotate(FloatVector v){
-		v.pushFront(0f);
-		Quaternion p = new Quaternion(v);
-		Quaternion result = multiply(p).multiply(conjugate());
-		return new FloatVector(result.q.get(1), result.q.get(2), result.q.get(3));
-	}
+
 	
 	public Quaternion conjugate(){
-		FloatVector c = q.copy();
-		c.set(1, -q.get(1));
-		c.set(2, -q.get(2));
-		c.set(3, -q.get(3));
-		return new Quaternion(c);
+		return new Quaternion(q.get(0), -q.get(1), -q.get(2), -q.get(3));
+	}
+	
+	public FloatVector toVector(){
+		return new FloatVector(q.get(1), q.get(2), q.get(3));
 	}
 	
 	@Override

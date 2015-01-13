@@ -6,10 +6,11 @@ uniform vec3 translation;
 uniform vec3 scale = vec3(1.0, 1.0, 1.0);
 uniform vec4 projection = vec4(1.0, 1.0, 1.0, 1.0);
 uniform mat3 rotation;
+uniform vec3 camera;
 
 void main()
 {	
-	vec3 ortho = (rotation * (vertex * scale) + translation);
+	vec3 ortho = (rotation * (vertex * scale) + translation) + camera;
 	vec3 persp = vec3(ortho.x / (ortho.z * projection.x), ortho.y / (ortho.z * projection.y), -1.0 + (ortho.z + projection.z) / projection.w);
 	color = vec4(clamp(vertex, 0.0, 1.0), 1.0);
 	gl_Position = vec4(persp, 1.0);

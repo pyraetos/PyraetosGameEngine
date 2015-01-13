@@ -10,7 +10,7 @@ public class Camera{
 	private FloatVector up;
 	
 	public Camera(){
-		position = new FloatVector();
+		position = new FloatVector(0f, 0f, 0f);
 		forward = Z_AXIS;
 		up = Y_AXIS;
 	}
@@ -41,6 +41,14 @@ public class Camera{
 	
 	public FloatVector getPosition(){
 		return position;
+	}
+	
+	public void move(FloatVector v){
+		position = position.add(v);
+	}
+	
+	public void move(float x, float y, float z){
+		position = position.add(x, y, z);
 	}
 	
 }

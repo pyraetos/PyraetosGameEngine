@@ -18,8 +18,9 @@ public class FloatVector extends Vector<Float>{
 
 	public FloatVector multiply(float scalar){
 		FloatVector result = new FloatVector();
-		for(int i = 0; i < size; i++)
-			result.add(scalar * get(i));
+		for(int i = 0; i < size; i++){
+			result.pushBack(scalar * get(i));
+		}
 		return result;
 	}
 	
@@ -48,6 +49,14 @@ public class FloatVector extends Vector<Float>{
 		return c;
 	}
 	
+	public FloatVector rotate(float theta, FloatVector axis){
+		Quaternion a = new Quaternion(theta, axis);
+		Quaternion b = toQuaternion();
+		Quaternion c = a.conjugate();
+		Quaternion d = a.multiply(b).multiply(c);
+		return d.toVector();
+	}
+	
 	public FloatVector cross(FloatVector b){
 		if(size != 3 || b.size != 3)
 			Sys.error("Both vectors in a cross product must be 3 dimensional!");
@@ -64,6 +73,10 @@ public class FloatVector extends Vector<Float>{
 		for(int i = 0; i < size; i++)
 			result.pushBack(get(i) / magnitude);
 		return result;
+	}
+	
+	public Quaternion toQuaternion(){
+		return new Quaternion(0f, getX(), getY(), getZ());
 	}
 	
 	public float magnitude(){

@@ -33,6 +33,7 @@ public class Object3D{
 		shader.addUniform("rotation");
 		shader.addUniform("scale");
 		shader.addUniform("projection");
+		shader.addUniform("camera");
 	}
 	
 	public Mesh getMesh(){
@@ -57,6 +58,7 @@ public class Object3D{
 		shader.setUniform("rotation", FloatMatrix.rotation(rotation.getX(), rotation.getY(), rotation.getZ()));
 		shader.setUniform("scale", scale);
 		shader.setUniform4("projection", getProjection());
+		shader.setUniform("camera", Game.getCamera().getPosition().multiply(-1f));
 		mesh.render();
 	}
 	
