@@ -28,6 +28,7 @@ public class Game{
 	public static final float FAR_CLIP = 1000f;
 	public static final int MAX_FPS = 1000;
 	public static final long FRAME_TIME = (long)(1d / (double)MAX_FPS * 1000000000d);
+	public static final float SPEED = .05f;
 	
 	private Set<Object3D> objects;
 	
@@ -65,10 +66,13 @@ public class Game{
 	
 	private void initGame(){
 		objects = new HashSet<Object3D>();
-		Object3D object = new Object3D("models/cube.obj");
-		//object.getMesh().setWireframe(true);
-		object.setTranslation(0, 0, 15f);
-		objects.add(object);
+		Object3D small = new Object3D("models/cube.obj");
+		small.setTranslation(0, 0, 15f);
+		small.setScale(.6f, .6f, .6f);
+		objects.add(small);
+		Object3D big = new Object3D("models/cube.obj");
+		big.setTranslation(-6f, 3f, 18f);
+		objects.add(big);
 	}
 	
 	private void loop(){
@@ -96,17 +100,17 @@ public class Game{
 	private void update(){
 		Input.update();
 		if(Input.isKeyDown(Keyboard.KEY_W))
-			camera.move(0f, 0f, .01f);
+			camera.move(0f, 0f, SPEED);
 		if(Input.isKeyDown(Keyboard.KEY_S))
-			camera.move(0f, 0f, -.01f);
+			camera.move(0f, 0f, -SPEED);
 		if(Input.isKeyDown(Keyboard.KEY_A))
-			camera.move(-.01f, 0f, 0f);
+			camera.move(-SPEED, 0f, 0f);
 		if(Input.isKeyDown(Keyboard.KEY_D))
-			camera.move(.01f, 0f, 0f);
+			camera.move(SPEED, 0f, 0f);
 		if(Input.isKeyDown(Keyboard.KEY_SPACE))
-			camera.move(0f, .01f, 0f);
+			camera.move(0f, SPEED, 0f);
 		if(Input.isKeyDown(Keyboard.KEY_LSHIFT))
-			camera.move(0f, -.01f, 0f);
+			camera.move(0f, -SPEED, 0f);
 		for(Object3D object : objects){
 			object.rotate(0.001f, 0.001f, 0.001f);
 		}
