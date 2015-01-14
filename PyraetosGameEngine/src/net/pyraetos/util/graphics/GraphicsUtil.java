@@ -22,6 +22,8 @@ public abstract class GraphicsUtil{
 			buffer.put(v.getX());
 			buffer.put(v.getY());
 			buffer.put(v.getZ());
+			buffer.put(v.getTextureCoordinates().getX());
+			buffer.put(v.getTextureCoordinates().getY());
 		}
 		buffer.flip();
 		return buffer;

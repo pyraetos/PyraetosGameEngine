@@ -34,6 +34,7 @@ public class Object3D{
 		shader.addUniform("scale");
 		shader.addUniform("projection");
 		shader.addUniform("camera");
+		shader.addUniform("cr");
 	}
 	
 	public Mesh getMesh(){
@@ -45,7 +46,7 @@ public class Object3D{
 	}
 	
 	private FloatVector getProjection(){
-		float x = ((float)Math.tan(Game.FIELD_OF_VIEW / 2f) * Game.ASPECT);
+		float x = ((float)Math.tan(Game.FIELD_OF_VIEW / 2f) * Game.getAspectRatio());
 		float y = ((float)Math.tan(Game.FIELD_OF_VIEW / 2f));
 		float z = -Game.NEAR_CLIP;
 		float depth = Game.FAR_CLIP - Game.NEAR_CLIP;
@@ -59,6 +60,7 @@ public class Object3D{
 		shader.setUniform("scale", scale);
 		shader.setUniform4("projection", getProjection());
 		shader.setUniform("camera", Game.getCamera().getPosition().multiply(-1f));
+		shader.setUniform("cr", Game.getCamera().getRotationMatrix());
 		mesh.render();
 	}
 	

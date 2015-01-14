@@ -3,8 +3,11 @@ package net.pyraetos.util;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.InputStream;
 import java.net.URL;
 
 public abstract class Data{
@@ -49,4 +52,13 @@ public abstract class Data{
 		return result;
 	}
 
+	public static InputStream getStream(String dir){
+		File file = new File(dir);
+		try{
+			return new FileInputStream(file);
+		} catch(FileNotFoundException e){
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

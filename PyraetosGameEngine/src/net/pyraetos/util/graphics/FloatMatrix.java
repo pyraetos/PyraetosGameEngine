@@ -3,7 +3,6 @@ package net.pyraetos.util.graphics;
 import static net.pyraetos.util.Sys.cos;
 import static net.pyraetos.util.Sys.sin;
 import net.pyraetos.util.Matrix;
-import net.pyraetos.util.Vector;
 
 public class FloatMatrix extends Matrix<Float>{
 
@@ -11,6 +10,10 @@ public class FloatMatrix extends Matrix<Float>{
 		super(matrix);
 	}
 
+	public FloatMatrix(FloatVector... columns){
+		super(columns);
+	}
+	
 	public FloatMatrix multiply(Matrix<Float> right){
 		FloatMatrix product = FloatMatrix.zeros(right.getWidth());
 		for(int x = 0; x < right.getWidth(); x++){
@@ -76,7 +79,7 @@ public class FloatMatrix extends Matrix<Float>{
 		return yaw.multiply(pitch).multiply(roll);
 	}
 	
-	public static FloatMatrix rotation(Vector<Float> v){
+	public static FloatMatrix rotation(FloatVector v){
 		return rotation(v.getX(), v.getY(), v.getZ());
 	}
 	
