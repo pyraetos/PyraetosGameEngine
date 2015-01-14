@@ -16,6 +16,12 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Game{
 
+	/*
+	 * TODO:
+	 * Shader stuff
+	 * Input stuff
+	 */
+	
 	public static final int DEFAULT_WIDTH = 800;
 	public static final int DEFAULT_HEIGHT = 600;
 	public static final String TITLE = "Game";

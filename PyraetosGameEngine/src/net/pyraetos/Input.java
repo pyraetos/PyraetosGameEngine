@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.pyraetos.util.Vector;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -56,7 +55,19 @@ public class Input{
 		return pressedMouse.contains(button);
 	}
 	
-	public static Vector<Integer> getMousePoint(){
+	public static Vector<Integer> getMousePosition(){
 		return new Vector<Integer>(Mouse.getX(), Mouse.getY());
+	}
+	
+	public static void setMousePosition(int x, int y){
+		Mouse.setCursorPosition(x, y);
+	}
+	
+	public static void setMouseHidden(boolean hidden){
+		Mouse.setGrabbed(hidden);
+	}
+	
+	public static boolean isMouseHidden(){
+		return Mouse.isGrabbed();
 	}
 }
