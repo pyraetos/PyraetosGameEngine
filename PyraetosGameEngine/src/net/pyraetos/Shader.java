@@ -83,4 +83,8 @@ public class Shader{
 	public void setUniform(String name, FloatMatrix matrix){
 		glUniformMatrix3(uniforms.get(name), false, GraphicsUtil.toBuffer(matrix));
 	}
+	
+	public void setUniform4(String name, FloatMatrix matrix){
+		glUniformMatrix4(uniforms.get(name), false, GraphicsUtil.toBuffer(matrix));
+	}
 }

@@ -83,6 +83,7 @@ public class Game{
 			Object3D o = new Object3D("models/cube.obj");
 			o.setTranslation((float)Math.cos(i) * 20, 0, (float)Math.sin(i) * 20);
 			o.setScale(.6f, .6f, .6f);
+			o.getMesh().setWireframe(true);
 			objects.add(o);
 		}
 	}

@@ -1,6 +1,5 @@
 package net.pyraetos;
 
-import net.pyraetos.util.Sys;
 import net.pyraetos.util.graphics.FloatMatrix;
 import net.pyraetos.util.graphics.FloatVector;
 
@@ -57,7 +56,7 @@ public class Object3D{
 		FloatMatrix a = FloatMatrix.translation(translation);
 		FloatMatrix b = FloatMatrix.rotation(rotation);
 		FloatMatrix c = FloatMatrix.scale(scale);
-		shader.setUniform("transformation", a);
+		shader.setUniform4("transformation", a.multiply(b).multiply(c));
 		shader.setUniform4("projection", getProjection());
 		shader.setUniform("camera", Game.getCamera().getPosition().multiply(-1f));
 		shader.setUniform("cr", Game.getCamera().getRotationMatrix());

@@ -7,8 +7,5 @@ uniform vec3 tint = vec3(1.0, 1.0, 1.0);
 void main()
 {
 	vec4 texColor = texture2D(sampler, texCoord.xy);
-	if(texColor == 0)
-		gl_FragColor = vec4(tint, 1);
-	else
-		gl_FragColor = texColor * vec4(tint, 1);
+	gl_FragColor = vec4(tint, 1);
 }

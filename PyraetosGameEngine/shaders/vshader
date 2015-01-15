@@ -16,7 +16,7 @@ vec3 project(vec3 v){
 
 void main()
 {	
-	vec3 ortho = cr * ((transformation * vec4(vertex, 1.0)).xyz) + camera;
+	vec3 ortho = cr * ((transformation * vec4(vertex, 1.0)).xyz + camera);
 	gl_Position = vec4(project(ortho), 1.0);
 	texCoord = _texCoord;
 }
