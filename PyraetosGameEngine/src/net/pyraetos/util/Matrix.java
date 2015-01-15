@@ -35,6 +35,11 @@ public class Matrix<T>{
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
+	public Matrix(int rows, int cols){
+		matrix = (T[][])new Object[cols][rows];
+	}
+	
 	public void set(int x, int y, T t){
 		try{
 			matrix[x][y] = t;

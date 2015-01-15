@@ -10,8 +10,12 @@ public class FloatMatrix extends Matrix<Float>{
 		super(matrix);
 	}
 
-	public FloatMatrix(FloatVector... columns){
-		super(columns);
+	public FloatMatrix(FloatVector... rows){
+		super(rows);
+	}
+	
+	public FloatMatrix(int rows, int cols){
+		super(rows, cols);
 	}
 	
 	public FloatMatrix multiply(Matrix<Float> right){
@@ -56,31 +60,52 @@ public class FloatMatrix extends Matrix<Float>{
 		return zeros(size, size);
 	}
 	
+	public static FloatMatrix translation(float dx, float dy, float dz){
+		FloatMatrix m = new FloatMatrix(4, 4);
+		
+		m.set(0, 0, 1f);	m.set(1, 0, 0f);	m.set(2, 0, 0f);	m.set(3, 0, dx);
+		m.set(0, 1, 0f);	m.set(1, 1, 1f);	m.set(2, 1, 0f);	m.set(3, 1, dy);
+		m.set(0, 2, 0f);	m.set(1, 2, 0f);	m.set(2, 2, 1f);	m.set(3, 2, dz);
+		m.set(0, 3, 0f);	m.set(1, 3, 0f);	m.set(2, 3, 0f);	m.set(3, 3, 1f);
+		
+		return m;
+		
+	}
+	
 	public static FloatMatrix rotation(float p, float y, float r){
-		FloatMatrix pitch = FloatMatrix.zeros(3);
-		FloatMatrix yaw = FloatMatrix.zeros(3);
-		FloatMatrix roll = FloatMatrix.zeros(3);
+		float sp = sin(p);	float cp = cos(p);
+		float sy = sin(y);	float cy = cos(y);
+		float sr = sin(r);	float cr = cos(r);
+		FloatMatrix m = new FloatMatrix(4, 4);
+
+		m.set(0, 0, cy*cr + sy*sp*sr);	m.set(1, 0, -cy*sr + sy*sp*cr);	m.set(2, 0, sy*cp);	m.set(3, 0, 0f);
+		m.set(0, 1, cp*sr);				m.set(1, 1, cp*cr);				m.set(2, 1, -sp);	m.set(3, 1, 0f);
+		m.set(0, 2, -sy*cr + cy*sp*sr);	m.set(1, 2, sy*sr + cy*sp*cr);	m.set(2, 2, cy*cp);	m.set(3, 2, 0f);
+		m.set(0, 3, 0f);				m.set(1, 3, 0f);				m.set(2, 3, 0f);	m.set(3, 3, 1f);
 		
-		//pitch
-		pitch.set(0, 0, 1f);	pitch.set(1, 0, 0f);		pitch.set(2, 0, 0f);
-		pitch.set(0, 1, 0f);	pitch.set(1, 1, cos(p));	pitch.set(2, 1, -sin(p));
-		pitch.set(0, 2, 0f);	pitch.set(1, 2, sin(p));	pitch.set(2, 2, cos(p));
-		
-		//yaw
-		yaw.set(0, 0, cos(y));	yaw.set(1, 0, 0f);	yaw.set(2, 0, sin(y));
-		yaw.set(0, 1, 0f);		yaw.set(1, 1, 1f);	yaw.set(2, 1, 0f);
-		yaw.set(0, 2, -sin(y));	yaw.set(1, 2, 0f);	yaw.set(2, 2, cos(y));
-		
-		//roll
-		roll.set(0, 0, cos(r));	roll.set(1, 0, -sin(r));	roll.set(2, 0, 0f);
-		roll.set(0, 1, sin(r));	roll.set(1, 1, cos(r));		roll.set(2, 1, 0f);
-		roll.set(0, 2, 0f);		roll.set(1, 2, 0f);			roll.set(2, 2, 1f);
-		
-		return yaw.multiply(pitch).multiply(roll);
+		return m;
+	}
+	
+	public static FloatMatrix scale(float i, float j, float k){
+		FloatMatrix m = new FloatMatrix(4, 4);
+
+		m.set(0, 0, i);		m.set(1, 0, 0f);	m.set(2, 0, 0f);	m.set(3, 0, 0f);
+		m.set(0, 1, 0f);	m.set(1, 1, j);		m.set(2, 1, 0f);	m.set(3, 1, 0f);
+		m.set(0, 2, 0f);	m.set(1, 2, 0f);	m.set(2, 2, k);		m.set(3, 2, 0f);
+		m.set(0, 3, 0f);	m.set(1, 3, 0f);	m.set(2, 3, 0f);	m.set(3, 3, 1f);
+		return m;
+	}
+	
+	public static FloatMatrix translation(FloatVector v){
+		return translation(v.getX(), v.getY(), v.getZ());
 	}
 	
 	public static FloatMatrix rotation(FloatVector v){
 		return rotation(v.getX(), v.getY(), v.getZ());
+	}
+	
+	public static FloatMatrix scale(FloatVector v){
+		return scale(v.getX(), v.getY(), v.getZ());
 	}
 	
 }

@@ -1,10 +1,14 @@
 #version 330
 
-out vec4 fragColor;
-in vec4 color;
-uniform vec3 tint = vec3(1, 1, 1);
+in vec2 texCoord;
+uniform sampler2D sampler;
+uniform vec3 tint = vec3(1.0, 1.0, 1.0);
 
 void main()
 {
-	fragColor = color;
+	vec4 texColor = texture2D(sampler, texCoord.xy);
+	if(texColor == 0)
+		gl_FragColor = vec4(tint, 1);
+	else
+		gl_FragColor = texColor * vec4(tint, 1);
 }
