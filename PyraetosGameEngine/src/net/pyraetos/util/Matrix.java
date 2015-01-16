@@ -40,6 +40,22 @@ public class Matrix<T>{
 		matrix = (T[][])new Object[cols][rows];
 	}
 	
+	@SuppressWarnings("unchecked")
+	public Vector<T> getRow(int row){
+		Object[] o = new Object[getWidth()];
+		for(int i = 0; i < getWidth(); i++)
+			o[i] = get(i, row);
+		return new Vector<T>((T[])o);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Vector<T> getColumn(int column){
+		Object[] o = new Object[getHeight()];
+		for(int j = 0; j < getHeight(); j++)
+			o[j] = get(column, j);
+		return new Vector<T>((T[])o);
+	}
+	
 	public void set(int x, int y, T t){
 		try{
 			matrix[x][y] = t;

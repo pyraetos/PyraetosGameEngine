@@ -10,9 +10,15 @@ public class Vector<T>{
 	public Vector(T... elements){
 		size = elements.length;
 		if(size == 0)
-			this.elements = (T[]) new Object[1];
+			this.elements = (T[]) new Object[4];
 		else
 			this.elements = elements;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Vector(){
+		this.elements = (T[]) new Object[4];
+		size = 0;
 	}
 	
 	public Vector<T> copy(){

@@ -18,7 +18,7 @@ public class FloatMatrix extends Matrix<Float>{
 		super(rows, cols);
 	}
 	
-	public FloatMatrix multiply(Matrix<Float> right){
+	public FloatMatrix multiply(FloatMatrix right){
 		FloatMatrix product = FloatMatrix.zeros(right.getWidth());
 		for(int x = 0; x < right.getWidth(); x++){
 			for(int y = 0; y < this.getHeight(); y++){
@@ -29,6 +29,13 @@ public class FloatMatrix extends Matrix<Float>{
 				product.set(x, y, dotProduct);
 			}
 		}
+		return product;
+	}
+	
+	public FloatVector multiply(FloatVector right){
+		FloatVector product = new FloatVector();
+		for(int i = 0; i < right.size(); i++)
+			product.pushBack(right.dot(getRow(i)));
 		return product;
 	}
 	

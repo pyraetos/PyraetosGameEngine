@@ -9,6 +9,10 @@ public class FloatVector extends Vector<Float>{
 		super(elements);
 	}
 	
+	public FloatVector(){
+		super();
+	}
+	
 	public FloatVector copy(){
 		FloatVector v = new FloatVector();
 		for(Object f : elements)
@@ -24,9 +28,9 @@ public class FloatVector extends Vector<Float>{
 		return result;
 	}
 	
-	public FloatVector add(FloatVector b){
+	public FloatVector add(Vector<Float> b){
 		FloatVector result = new FloatVector();
-		for(int i = 0; i < Math.min(size, b.size); i++)
+		for(int i = 0; i < Math.min(size, b.size()); i++)
 			result.pushBack(get(i) + b.get(i));
 		return result;
 	}
@@ -42,9 +46,9 @@ public class FloatVector extends Vector<Float>{
 		return result;
 	}
 	
-	public float dot(FloatVector b){
+	public float dot(Vector<Float> b){
 		float c = 0f;
-		for(int i = 0; i < Math.min(size, b.size); i++)
+		for(int i = 0; i < Math.min(size, b.size()); i++)
 			c += get(i) * b.get(i);
 		return c;
 	}
@@ -57,8 +61,8 @@ public class FloatVector extends Vector<Float>{
 		return d.toVector();
 	}
 	
-	public FloatVector cross(FloatVector b){
-		if(size != 3 || b.size != 3)
+	public FloatVector cross(Vector<Float> b){
+		if(size != 3 || b.size() != 3)
 			Sys.error("Both vectors in a cross product must be 3 dimensional!");
 		FloatVector result = new FloatVector();
 		result.pushBack(getY() * b.getZ() - getZ() * b.getY());
