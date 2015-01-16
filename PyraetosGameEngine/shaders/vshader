@@ -7,8 +7,6 @@ out vec2 texCoord;
 
 uniform mat4 transformation;
 uniform vec4 projection = vec4(1.0, 1.0, 1.0, 1.0);
-uniform mat3 cr;
-uniform vec3 camera;
 
 vec3 project(vec3 v){
 	return vec3(v.x / (v.z * projection.x), v.y / (v.z * projection.y), -1.0 + (v.z + projection.z) / projection.w);
@@ -16,7 +14,7 @@ vec3 project(vec3 v){
 
 void main()
 {	
-	vec3 ortho = cr * ((transformation * vec4(vertex, 1.0)).xyz + camera);
+	vec3 ortho = (transformation * vec4(vertex, 1.0)).xyz;
 	gl_Position = vec4(project(ortho), 1.0);
 	texCoord = _texCoord;
 }

@@ -20,6 +20,8 @@ public class Game{
 	 * TODO:
 	 * Shader stuff
 	 * Input stuff
+	 * Matrix to use constructor instead of zeros
+	 * Store stuff as matrices instead of vectors
 	 */
 	
 	public static final int DEFAULT_WIDTH = 800;
@@ -29,7 +31,7 @@ public class Game{
 	public static final FloatVector X_AXIS = new FloatVector(1f, 0f, 0f);
 	public static final FloatVector Y_AXIS = new FloatVector(0f, 1f, 0f);
 	public static final FloatVector Z_AXIS = new FloatVector(0f, 0f, 1f);
-	public static final float NEAR_CLIP = 1.5f;
+	public static final float NEAR_CLIP = .5f;
 	public static final float FAR_CLIP = 1000f;
 	public static final int MAX_FPS = 1000;
 	public static final long FRAME_TIME = (long)(1d / (double)MAX_FPS * 1000000000d);
@@ -79,13 +81,13 @@ public class Game{
 	
 	private void initGame(){
 		objects = new HashSet<Object3D>();
-		for(float i = 0; i < 2 * Math.PI; i+=(2 * Math.PI) / 18f){
+		//for(float i = 0; i < 2 * Math.PI; i+=(2 * Math.PI) / 18f){
 			Object3D o = new Object3D("models/cube.obj");
-			o.setTranslation((float)Math.cos(i) * 20, 0, (float)Math.sin(i) * 20);
+			o.setTranslation(/*(float)Math.cos(i)*/0 * 20, 0, /*(float)Math.sin(i)*/1 * 20);
 			o.setScale(.6f, .6f, .6f);
 			o.getMesh().setWireframe(true);
 			objects.add(o);
-		}
+		//}
 	}
 	
 	private void loop(){
@@ -114,9 +116,9 @@ public class Game{
 		Input.update();
 		updateMovement();
 		updateRotation();
-		for(Object3D object : objects){
+		/*for(Object3D object : objects){
 			object.rotate(0.001f, 0.001f, 0.001f);
-		}
+		}*/
 	}
 	
 	private void updateMovement(){

@@ -24,5 +24,4 @@ public class Texture{
 	public void bind(){
 		glBindTexture(GL_TEXTURE_2D, pointer);
 	}
-	
 }

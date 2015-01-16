@@ -31,8 +31,7 @@ public class Object3D{
 		shader.linkShaders();
 		shader.addUniform("transformation");
 		shader.addUniform("projection");
-		shader.addUniform("camera");
-		shader.addUniform("cr");
+		//shader.addUniform("cr");
 	}
 	
 	public Mesh getMesh(){
@@ -51,15 +50,18 @@ public class Object3D{
 		return new FloatVector(x, y, z, depth);
 	}
 	
-	public void render(){
-		shader.bind();
-		FloatMatrix a = FloatMatrix.translation(translation);
+	private FloatMatrix getTransformation(){
+		FloatMatrix a = FloatMatrix.translation(translation).add(Game.getCamera().getTranslationMatrix());
 		FloatMatrix b = FloatMatrix.rotation(rotation);
 		FloatMatrix c = FloatMatrix.scale(scale);
-		shader.setUniform4("transformation", a.multiply(b).multiply(c));
+		FloatMatrix d = Game.getCamera().getRotationMatrix();
+		return d.multiply(a).multiply(b).multiply(c);
+	}
+	
+	public void render(){
+		shader.bind();
+		shader.setUniform4("transformation", getTransformation());
 		shader.setUniform4("projection", getProjection());
-		shader.setUniform("camera", Game.getCamera().getPosition().multiply(-1f));
-		shader.setUniform("cr", Game.getCamera().getRotationMatrix());
 		mesh.render();
 	}
 	

@@ -32,6 +32,16 @@ public class FloatMatrix extends Matrix<Float>{
 		return product;
 	}
 	
+	public FloatMatrix add(Matrix<Float> m){
+		if(getWidth() != m.getWidth() || getHeight() != m.getHeight())
+			return this;
+		FloatMatrix sum = new FloatMatrix(getWidth(), getHeight());
+		for(int i = 0; i < getWidth(); i++)
+			for(int j = 0; j < getHeight(); j++)
+				sum.set(i, j, get(i, j) + m.get(i, j));
+		return sum;
+	}
+	
 	public static FloatMatrix identity(int size){
 		Float[][] matrix = new Float[size][];
 		for(int i = 0; i < size; i++){

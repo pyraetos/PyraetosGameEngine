@@ -37,7 +37,20 @@ public class Camera{
 	}
 	
 	public FloatMatrix getRotationMatrix(){
-		return new FloatMatrix(getRight(), getUp(), getForward());
+		FloatMatrix m = FloatMatrix.identity(4);
+		FloatVector right = getRight();
+		m.set(0, 0, right.getX());	m.set(1, 0, right.getY());	m.set(2, 0, right.getZ());
+		m.set(0, 1, up.getX());		m.set(1, 1, up.getY());		m.set(2, 1, up.getZ());
+		m.set(0, 2, forward.getX());m.set(1, 2, forward.getY());m.set(2, 2, forward.getZ());
+		return m;
+	}
+	
+	public FloatMatrix getTranslationMatrix(){
+		FloatMatrix m = FloatMatrix.identity(4);
+		m.set(3, 0, -position.getX());
+		m.set(3, 1, -position.getY());
+		m.set(3, 2, -position.getZ());
+		return m;
 	}
 	
 	public FloatVector getRight(){
