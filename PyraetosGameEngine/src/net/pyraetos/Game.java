@@ -20,7 +20,6 @@ public class Game{
 
 	/*
 	 * TODO:
-	 * Shader stuff
 	 * Input stuff
 	 * Matrix to use constructor instead of zeros
 	 * Store stuff as matrices instead of vectors
@@ -33,6 +32,7 @@ public class Game{
 	public static final FloatVector X_AXIS = new FloatVector(1f, 0f, 0f);
 	public static final FloatVector Y_AXIS = new FloatVector(0f, 1f, 0f);
 	public static final FloatVector Z_AXIS = new FloatVector(0f, 0f, 1f);
+	public static final FloatVector DEFAULT_CLEAR_COLOR = new FloatVector(.5294f, .8078f, .9216f);
 	public static final float NEAR_CLIP = 0f;
 	public static final float FAR_CLIP = 1000f;
 	public static final int MAX_FPS = 1000;
@@ -73,7 +73,7 @@ public class Game{
 		} catch(LWJGLException e){
 			e.printStackTrace();
 		}
-		glClearColor(0f, 0f, 0f, 0f);
+		setClearColor(DEFAULT_CLEAR_COLOR);
 		glFrontFace(GL_CW);
 		glCullFace(GL_BACK);
 		glEnable(GL_CULL_FACE);
