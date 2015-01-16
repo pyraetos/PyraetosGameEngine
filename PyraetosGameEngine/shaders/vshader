@@ -9,7 +9,14 @@ uniform mat4 transformation;
 uniform vec4 projection = vec4(1.0, 1.0, 1.0, 1.0);
 
 vec3 project(vec3 v){
-	return vec3(v.x / (v.z * projection.x), v.y / (v.z * projection.y), -1.0 + (v.z + projection.z) / projection.w);
+	float z = v.z;
+	float x = v.x;
+	float y = v.y;
+	if(z < 0){
+		x *= -1;
+		y *= -1;
+	}
+	return vec3(x / (z * projection.x), y / (z * projection.y), -1.0 + (z + projection.z) / projection.w);
 }
 
 void main()

@@ -7,16 +7,19 @@ public class Object3D{
 
 	private Mesh mesh;
 	private Shader shader;
+	private Material material;
 	private FloatVector translation;
 	private FloatVector rotation;
 	private FloatVector scale;
 	
-	public Object3D(){
+	public Object3D(Material material){
+		this.material = material;
 		mesh = new Mesh();
 		init();
 	}
 	
 	public Object3D(String meshDir){
+		this.material = new Material();
 		mesh = new Mesh(meshDir);
 		init();
 	}
@@ -31,7 +34,7 @@ public class Object3D{
 		shader.linkShaders();
 		shader.addUniform("transformation");
 		shader.addUniform("projection");
-		//shader.addUniform("cr");
+		shader.addUniform("tint");
 	}
 	
 	public Mesh getMesh(){
@@ -42,16 +45,8 @@ public class Object3D{
 		return shader;
 	}
 	
-	private FloatVector getProjection(){
-		float x = ((float)Math.tan(Game.FIELD_OF_VIEW / 2f) * Game.getAspectRatio());
-		float y = ((float)Math.tan(Game.FIELD_OF_VIEW / 2f));
-		float z = -Game.NEAR_CLIP;
-		float depth = Game.FAR_CLIP - Game.NEAR_CLIP;
-		return new FloatVector(x, y, z, depth);
-	}
-	
 	private FloatMatrix getTransformation(){
-		FloatMatrix a = FloatMatrix.translation(translation).add(Game.getCamera().getTranslationMatrix());
+		FloatMatrix a = FloatMatrix.translation(translation).multiply(Game.getCamera().getTranslationMatrix());
 		FloatMatrix b = FloatMatrix.rotation(rotation);
 		FloatMatrix c = FloatMatrix.scale(scale);
 		FloatMatrix d = Game.getCamera().getRotationMatrix();
@@ -61,8 +56,14 @@ public class Object3D{
 	public void render(){
 		shader.bind();
 		shader.setUniform4("transformation", getTransformation());
-		shader.setUniform4("projection", getProjection());
+		shader.setUniform4("projection", Game.getProjection());
+		shader.setUniform("tint", material.getTint());
+		material.bindTexture();
 		mesh.render();
+	}
+	
+	public void setMaterial(Material material){
+		this.material = material;
 	}
 	
 	public float getX(){
@@ -75,6 +76,18 @@ public class Object3D{
 	
 	public float getZ(){
 		return translation.getZ();
+	}
+	
+	public Material getMaterial(){
+		return material;
+	}
+	
+	public Texture getTexture(){
+		return material.getTexture();
+	}
+	
+	public FloatVector getTint(){
+		return material.getTint();
 	}
 	
 	public void setTranslation(FloatVector v){

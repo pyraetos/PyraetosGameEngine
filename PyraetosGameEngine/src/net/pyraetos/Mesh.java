@@ -52,7 +52,9 @@ public class Mesh{
 		glEnableVertexAttribArray(1);
 		
 		if(wireframe)
-			glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE );
+		else
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		
 		glBindBuffer(GL_ARRAY_BUFFER, vboPointer);
 		glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.SIZE * 4, 0);
