@@ -9,9 +9,13 @@ public class Camera{
 	private FloatVector position;
 	private FloatVector forward;
 	private FloatVector up;
+	private FloatMatrix translationMatrix;
+	private FloatMatrix rotationMatrix;
 	
 	public Camera(){
 		position = new FloatVector(0f, 0f, 0f);
+		translationMatrix = FloatMatrix.identity(4);
+		rotationMatrix = FloatMatrix.identity(4);
 		forward = Z_AXIS;
 		up = Y_AXIS;
 	}
@@ -34,23 +38,32 @@ public class Camera{
 		rotateX(pitch);
 		rotateY(yaw);
 		rotateZ(roll);
+		calculateRotationMatrix();
 	}
 	
 	public FloatMatrix getRotationMatrix(){
+		return rotationMatrix;
+	}
+	
+	private void calculateRotationMatrix(){
 		FloatMatrix m = FloatMatrix.identity(4);
 		FloatVector right = getRight();
 		m.set(0, 0, right.getX());	m.set(1, 0, right.getY());	m.set(2, 0, right.getZ());
 		m.set(0, 1, up.getX());		m.set(1, 1, up.getY());		m.set(2, 1, up.getZ());
 		m.set(0, 2, forward.getX());m.set(1, 2, forward.getY());m.set(2, 2, forward.getZ());
-		return m;
+		rotationMatrix = m;
 	}
 	
 	public FloatMatrix getTranslationMatrix(){
+		return translationMatrix;
+	}
+	
+	private void calculateTranslationMatrix(){
 		FloatMatrix m = FloatMatrix.identity(4);
 		m.set(3, 0, -position.getX());
 		m.set(3, 1, -position.getY());
 		m.set(3, 2, -position.getZ());
-		return m;
+		translationMatrix = m;
 	}
 	
 	public FloatVector getRight(){
@@ -85,7 +98,7 @@ public class Camera{
 	 * Moves relative to the camera's orientation
 	 */
 	public void move(FloatVector v){
-		position = position.add(v);
+		move(v.getX(), v.getY(), v.getZ());
 	}
 	
 	/**
@@ -103,13 +116,15 @@ public class Camera{
 		float fy = forward.getY();
 		float fz = forward.getZ();
 		position = position.add(rx * x + ux * y + fx * z, ry * x + uy * y + fy * z, rz * x + uz * y + fz * z);
+		calculateTranslationMatrix();
 	}
 	
 	public void moveAbsolute(FloatVector v){
 		position = position.add(v);
+		calculateTranslationMatrix();
 	}
 	
 	public void moveAbsolute(float x, float y, float z){
-		position = position.add(x, y, z);
+		moveAbsolute(new FloatVector(x, y, z));
 	}
 }

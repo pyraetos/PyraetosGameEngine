@@ -11,6 +11,7 @@ public class Object3D{
 	private FloatVector translation;
 	private FloatVector rotation;
 	private FloatVector scale;
+	private FloatMatrix transformation;
 	
 	public Object3D(Material material){
 		this.material = material;
@@ -29,6 +30,7 @@ public class Object3D{
 		this.translation = new FloatVector(0f, 0f, 0f);
 		this.rotation = new FloatVector(0f, 0f, 0f);
 		this.scale = new FloatVector(1f, 1f, 1f);
+		this.transformation = FloatMatrix.identity(4);
 		shader.addVertexShader("shaders/vshader");
 		shader.addFragmentShader("shaders/fshader");
 		shader.linkShaders();
@@ -45,17 +47,16 @@ public class Object3D{
 		return shader;
 	}
 	
-	private FloatMatrix getTransformation(){
+	private void calculateTransformation(){
 		FloatMatrix a = FloatMatrix.translation(translation).multiply(Game.getCamera().getTranslationMatrix());
 		FloatMatrix b = FloatMatrix.rotation(rotation);
 		FloatMatrix c = FloatMatrix.scale(scale);
-		FloatMatrix d = Game.getCamera().getRotationMatrix();
-		return d.multiply(a).multiply(b).multiply(c);
+		transformation = a.multiply(b).multiply(c);
 	}
 	
 	public void render(){
 		shader.bind();
-		shader.setUniform4("transformation", getTransformation());
+		shader.setUniform4("transformation", Game.getCamera().getRotationMatrix().multiply(transformation));
 		shader.setUniform4("projection", Game.getProjection());
 		shader.setUniform("tint", material.getTint());
 		material.bindTexture();
@@ -92,6 +93,7 @@ public class Object3D{
 	
 	public void setTranslation(FloatVector v){
 		translation = v;
+		calculateTransformation();
 	}
 	
 	public void setTranslation(float x, float y, float z){
@@ -108,6 +110,7 @@ public class Object3D{
 	
 	public void setRotation(FloatVector v){
 		rotation = v;
+		calculateTransformation();
 	}
 	
 	public void setRotation(float pitch, float yaw, float roll){
@@ -124,6 +127,7 @@ public class Object3D{
 	
 	public void setScale(FloatVector v){
 		scale = v;
+		calculateTransformation();
 	}
 	
 	public void setScale(float x, float y, float z){

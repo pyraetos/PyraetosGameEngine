@@ -19,7 +19,7 @@ public class FloatMatrix extends Matrix<Float>{
 	}
 	
 	public FloatMatrix multiply(FloatMatrix right){
-		FloatMatrix product = FloatMatrix.zeros(right.getWidth());
+		FloatMatrix product = new FloatMatrix(getHeight(), right.getWidth());
 		for(int x = 0; x < right.getWidth(); x++){
 			for(int y = 0; y < this.getHeight(); y++){
 				float dotProduct = 0f;

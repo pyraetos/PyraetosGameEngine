@@ -17,13 +17,6 @@ import org.lwjgl.opengl.DisplayMode;
 import static org.lwjgl.opengl.GL11.*;
 
 public class Game{
-
-	/*
-	 * TODO:
-	 * Input stuff
-	 * Matrix to use constructor instead of zeros
-	 * Store stuff as matrices instead of vectors
-	 */
 	
 	public static final int DEFAULT_WIDTH = 800;
 	public static final int DEFAULT_HEIGHT = 600;
@@ -90,7 +83,7 @@ public class Game{
 			o.setMaterial(new Material(Sys.randomColor()));
 			o.setTranslation((float)Math.cos(i) * 20, 0, (float)Math.sin(i) * 20);
 			o.setScale(.6f, .6f, .6f);
-			o.getMesh().setWireframe(true);
+			//o.getMesh().setWireframe(true);
 			objects.add(o);
 		}
 	}
