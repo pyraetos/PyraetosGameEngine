@@ -133,5 +133,4 @@ public class Object3D{
 	public void setScale(float x, float y, float z){
 		setScale(new FloatVector(x, y, z));
 	}
-	
 }
