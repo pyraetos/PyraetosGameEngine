@@ -41,6 +41,7 @@ public class Game{
 	private static int height;
 	private static FloatVector projection;
 	private static FloatVector clearColor;
+	private static FloatVector ambientLight;
 	
 	public static void main(String[] args){
 		new Game();
@@ -66,7 +67,8 @@ public class Game{
 		} catch(LWJGLException e){
 			e.printStackTrace();
 		}
-		setClearColor(DEFAULT_CLEAR_COLOR);
+		setClearColor(0f, 0f, 0f);
+		setAmbientLight(1f, 1f, 1f);
 		glFrontFace(GL_CW);
 		glCullFace(GL_BACK);
 		glEnable(GL_CULL_FACE);
@@ -102,6 +104,18 @@ public class Game{
 	
 	public static FloatVector getClearColor(){
 		return clearColor;
+	}
+	
+	public static FloatVector getAmbientLight(){
+		return ambientLight;
+	}
+	
+	public static void setAmbientLight(FloatVector ambientLight){
+		Game.ambientLight = ambientLight;
+	}
+	
+	public static void setAmbientLight(float r, float g, float b){
+		setAmbientLight(new FloatVector(r, g, b));
 	}
 	
 	private void loop(){

@@ -37,6 +37,7 @@ public class Object3D{
 		shader.addUniform("transformation");
 		shader.addUniform("projection");
 		shader.addUniform("tint");
+		shader.addUniform("ambientLight");
 	}
 	
 	public Mesh getMesh(){
@@ -59,6 +60,7 @@ public class Object3D{
 		shader.setUniform4("transformation", Game.getCamera().getRotationMatrix().multiply(transformation));
 		shader.setUniform4("projection", Game.getProjection());
 		shader.setUniform("tint", material.getTint());
+		shader.setUniform("ambientLight", Game.getAmbientLight());
 		material.bindTexture();
 		mesh.render();
 	}
